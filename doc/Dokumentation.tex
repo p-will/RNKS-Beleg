@@ -1,0 +1,184 @@
+\documentclass[12pt]{article}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[ngerman]{babel}
+\usepackage{tikz}
+\usepackage{amsmath}
+
+\begin{document}
+\topskip0pt
+\begin{center}
+\vspace*{30mm}
+{\Huge \underline  {Dokumentation}} \\ 
+\vspace{10mm}
+{\Large Beleg Rechnernetze/Kommunikationssysteme} \\
+{\Large Name : Paul Willam} \\
+{\Large Matrikelnummer: 44093 } \\
+
+\end{center}
+\pagebreak
+
+\begin{center}
+{\Huge \underline {Gliederung}} \\
+\par
+\vspace*{20mm}
+\begin{enumerate}
+  \item {\Large Zustandsmaschine Server} \\
+  \par
+  \item {\Large Zustandsmaschine Client} \\
+  \par
+  \item {\Large Probleme des Protokolls} \\
+  \par
+    \begin{itemize}
+        \item {\Large Limitierungen } \\
+        \par
+        \item {\Large Verbesserungsvorschläge} \\
+        \par
+    \end{itemize} 
+  \item {\Large Berechnung Durchsatz} \\
+  \par
+\end{enumerate}
+\end{center}
+\pagebreak
+
+
+\begin{center}
+{\Huge \underline {Zustandsmaschine Server}}
+\end{center}
+\par
+
+\vspace*{\fill}
+
+\begin{tikzpicture}[scale=0.2]
+\tikzstyle{every node}+=[inner sep=0pt]
+\draw [black] (15.2,-37.3) circle (3);
+\draw (15.2,-37.3) node {$Wait\mbox{ }for\mbox{ }Start$};
+\draw [black] (52,-37.3) circle (3);
+\draw (52,-37.3) node {$Wait\mbox{ }for\mbox{ }Data$};
+\draw [black] (17.425,-35.291) arc (128.7531:51.2469:25.839);
+\fill [black] (49.77,-35.29) -- (49.46,-34.4) -- (48.84,-35.18);
+\draw (33.6,-29.1) node [above] {$receive\mbox{ }start$};
+\draw [black] (52.594,-34.371) arc (196.26034:-91.73966:2.25);
+\draw (66.55,-31.47) node [above] {$receive\mbox{ }Data;\mbox{ }Send\mbox{ }ACK$};
+\fill [black] (54.69,-35.99) -- (55.59,-36.25) -- (55.31,-35.29);
+\draw [black] (53.981,-39.537) arc (69.25512:-218.74488:2.25);
+\draw (60.98,-44.87) node [below] {$wrong\mbox{ }Nr;\mbox{ }Send\mbox{ }ACK$};
+\fill [black] (51.43,-40.23) -- (50.68,-40.8) -- (51.61,-41.16);
+\draw [black] (49.488,-38.938) arc (-59.62258:-120.37742:31.419);
+\fill [black] (17.71,-38.94) -- (18.15,-39.77) -- (18.65,-38.91);
+\draw (33.6,-43.75) node [below] {$Timeout\mbox{ }10s$};
+\end{tikzpicture}
+
+\vspace*{\fill}
+\pagebreak
+
+
+\begin{center}
+{\Huge \underline {Zustandsmaschine Client}}
+\end{center}
+\par
+
+\vspace*{\fill}
+
+\begin{tikzpicture}[scale=0.2]
+\tikzstyle{every node}+=[inner sep=0pt]
+\draw [black] (12.8,-29.5) circle (3);
+\draw (12.8,-29.5) node {$Wait\mbox{ }for\mbox{ }Data$};
+\draw [black] (60.1,-30.8) circle (3);
+\draw (60.1,-30.8) node {$Wait\mbox{ }for\mbox{ }ACK\mbox{ }0/1$};
+\draw [black] (59.832,-27.824) arc (212.87864:-75.12136:2.25);
+\draw (69.15,-23.86) node [above] {$Timeout;\mbox{ }resend$};
+\fill [black] (62.3,-28.78) -- (63.24,-28.76) -- (62.7,-27.92);
+\draw [black] (57.634,-32.507) arc (-57.56194:-125.58672:37.973);
+\fill [black] (15.17,-31.34) -- (15.53,-32.21) -- (16.11,-31.4);
+\draw (36.1,-39.12) node [below] {$Receive\mbox{ }ACK\mbox{ }0/1$};
+\draw [black] (14.943,-27.402) arc (131.65443:45.19692:31.499);
+\fill [black] (58.08,-28.59) -- (57.86,-27.67) -- (57.16,-28.38);
+\draw (36.97,-18.57) node [above] {$SW\mbox{ }Called\mbox{ }Send;\mbox{ }Send\mbox{ }Packet\mbox{ }0/1$};
+\end{tikzpicture}
+
+\vspace*{\fill}
+\pagebreak
+
+\begin{center}
+{\Huge \underline {Probleme des Protokolls}}
+\end{center}
+\par
+
+\vspace*{10mm}
+
+\section*{\Large \underline {Limitierungen}}
+\vspace {5mm}
+
+\begin{itemize}
+  \item{Ineffektiv. Für ein Paket mehrere Übertragungen notwendig(Paket,ACK))} \\
+  \item{Limitierung der Dateien, die gesendet werden können, da Größe maximal 4 GB betragen kann} \\
+  \item{Beschädigung der Daten fällt erst im letzten Paket auf, da nur im letzten Datenpaket CRC versendet wird}
+\end{itemize}
+
+\section*{\Large \underline {Verbesserungsvorschläge}}
+\vspace {5mm}
+\begin{itemize}
+  \item{Effizienz erhöhen, indem mehrere Pakete auf einmal gesendet werden und ein ACK für das gesamte Set gilt. (Go-Back-N-Protokoll))}
+  \item{Fehlererkennung verbessern, indem jedes Paket mit CRC versehen wird.}
+\end{itemize}
+\vspace*{\fill}
+
+\pagebreak
+
+\begin{center}
+{\Huge \underline {Berechnung Durchsatz}}
+\end{center}
+\vspace*{10mm}
+
+\noindent {Durchsatz beschreibt die Menge der übertragenden Daten in einem bestimmten Zeitintervall}\\
+
+\noindent {\underline{Formel:} \\
+
+
+\begin{align}
+  \begin{split}
+      n_{sw} =  \frac {T_{p}}{T_{p} + 2T_{a} + T_{ACK}} \cdot ( 1 - P_{e} )
+  \end{split}
+\end{align}
+
+
+\noindent {\underline{Gegeben:} \\
+
+\begin{align}
+  \begin{split}
+     r_{b} = 1 GB/s = 10^9 Bit/s\\
+     T_{a} = 10ms = 10 \cdot 10^{-3}s\\
+     P_{e} = 0.1 \\
+     L = 1500Byte\\
+     T_{p} = \frac{L}{r_{b}} = \frac{1500*8 Bit}{10^9 Bit/s} = 1,2 \cdot 10^{-5}s\\
+     T_{ACK} = \frac { L_{ACK}}{r_{b}} = \frac {24 Bit}{10^9 Bit/s} = 2.4 \cdot 10^{-8}s\\
+     T_{w} = 2*T_{a} + T_{ACK} = 20 \cdot 10^{-3}s + 2,4 \cdot 10^{-8}s = 0,020000024 s \\
+   \end{split}
+ \end{align}
+
+\noindent {\underline{Berechnung:} \\
+
+\begin{align}
+  \begin{split}
+      n_{sw} =  \frac {T_{p}}{T_{p} + 2T_{a} + T_{ACK}} \cdot ( 1 - P_{e} ) \\
+      n_{sw} =  \frac {1,2 \cdot 10^{-5}s}{1,2 \cdot 10^{-5}s + 20 \cdot 10^{-3}s + 2.4 \cdot 10^{-8}s} \cdot 0.9 \\
+      n_{sw} = 0.000539675 \approx 0.00054 \stackrel{\wedge}= 540 kbit/s \stackrel{\wedge}= 67,5 kB/s
+  \end{split}
+\end{align}
+
+\vspace{5mm}
+
+\noindent {Praktisch ermittelter Durchsatz:  } \\
+
+\begin{align}
+  \begin{split}
+    n_{sw} \approx 25 kB/s
+  \end{split}
+\end{align}
+\noindent {Der theoretisch ermittelte Durchsatz ist deutlich höher als der praktisch ermittelte, da in der Theorie Netzeigenschaften zur leichteren Berechnung idealisiert werden. } \\
+\vspace*{\fill}
+
+
+
+\end{document}

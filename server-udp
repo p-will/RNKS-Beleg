@@ -1,0 +1,6 @@
+#!/bin/bash
+
+DIRECTORY=$( cd "$(dirname "$0")" ; pwd -P )      #Pfad, in dem das Skript ausgeführt wird
+FILEDIRECTORY=$(pwd)                             #Pfad, wo übertragee Datei gespeichert w<erden soll
+
+java -cp bin:$DIRECTORY/bin Beleg_Server $1

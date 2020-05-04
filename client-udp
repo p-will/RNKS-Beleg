@@ -1,0 +1,5 @@
+#!/bin/bash
+
+DIRECTORY=$( cd "$(dirname "$0")" ; pwd -P )      #Pfad, in dem das Skript ausgeführt wird
+
+java -cp bin:$DIRECTORY/bin Beleg_Client $1 $2 $3 
